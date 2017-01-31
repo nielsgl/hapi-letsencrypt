@@ -1,37 +1,37 @@
 'use strict';
 
 const Hapi = require('hapi');
-const CreateServer = require('auto-sni');
+// const CreateServer = require('auto-sni');
 const Chalk = require('chalk');
 
 const server = new Hapi.Server();
 
-// server.connection({
-//   host: '0.0.0.0',
-//   port: 8081
-// })
-
-
-const secureServer = CreateServer({
-  email: 'niels@postplanner.com',
-  agreeTos: true,
-  debug: true,
-  domains: ['localhost', 'hapi-letsencrypt.dev', 'shinra.home'],
-  forceSSL: true,
-  redirectCode: 301,
-  ports: {
-    http: 8080,
-    https: 8081
-  }
+server.connection({
+  host: '0.0.0.0',
+  port: 8080
 })
 
-server.connection({
-  listener: secureServer,
-  autoListen: false,
-  tls: true
-});
 
-console.log(server.connection);
+// const secureServer = CreateServer({
+//   email: 'niels@postplanner.com',
+//   agreeTos: true,
+//   debug: true,
+//   domains: ['localhost', 'hapi-letsencrypt.dev', 'shinra.home'],
+//   forceSSL: true,
+//   redirectCode: 301,
+//   ports: {
+//     http: 8080,
+//     https: 8081
+//   }
+// })
+// 
+// server.connection({
+//   listener: secureServer,
+//   autoListen: false,
+//   tls: true
+// });
+// 
+// console.log(server.connection);
 
 const options = {
     ops: {
