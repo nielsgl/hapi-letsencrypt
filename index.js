@@ -1,41 +1,69 @@
 'use strict';
 
 const Hapi = require('hapi');
-// const CreateServer = require('auto-sni');
+// const fs = require('fs');
+const CreateServer = require('auto-sni');
 const Chalk = require('chalk');
+// const Https = require('spdy')
+// const GreenLock = require('./greenlock');
 
 const server = new Hapi.Server();
 
-server.connection({
-  host: '0.0.0.0',
-  port: 8080
-})
+// const acmeResponser = GreenLock.middleware();
+// const httpsServer = Https.createServer(GreenLock.httpsOptions).listen(8081);
+
+// var tls = {
+//   key: fs.readFileSync('./key.txt'),
+//   cert: fs.readFileSync('./crt.txt')
+// };
 
 
-// const secureServer = CreateServer({
-//   email: 'niels@postplanner.com',
-//   agreeTos: true,
-//   debug: true,
-//   domains: ['localhost', 'hapi-letsencrypt.dev', 'shinra.home'],
-//   forceSSL: true,
-//   redirectCode: 301,
-//   ports: {
-//     http: 8080,
-//     https: 8081
-//   }
-// })
-// 
+
+
+
+
 // server.connection({
-//   listener: secureServer,
+//   listener: httpsServer,
 //   autoListen: false,
 //   tls: true
-// });
+// })
 // 
-// console.log(server.connection);
+// server.route({
+//   method: 'GET',
+//   path: '/.well-known/acme-challenge',
+//   handler: function (request, reply) {
+//     var req = request.raw.req;
+//     var res = request.raw.res;
+// 
+//     reply.close(false);
+//     acmeResponder(req, res);
+//   }
+// });
+
+
+const secureServer = CreateServer({
+  email: 'niels@postplanner.com',
+  agreeTos: true,
+  debug: true,
+  domains: ['hapi-letsencrypt.dev'],
+  forceSSL: true,
+  redirectCode: 301,
+  ports: {
+    http: 8080,
+    https: 8081
+  }
+})
+
+server.connection({
+  host: 'hapi-letsencrypt.dev',
+  listener: secureServer,
+  autoListen: false,
+  tls: true
+});
 
 const options = {
     ops: {
-        interval: 60000
+        interval: 180000
     },
     reporters: {
         console: [
