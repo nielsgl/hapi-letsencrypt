@@ -2,6 +2,7 @@
   "name": "hapi-letsencrypt",
   "version": "1.0.0",
   "description": "Example application of Hapi with LetsEncrypt",
+  "repository": "git@github.com:nielsgl/hapi-letsencrypt.git",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
